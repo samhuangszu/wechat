@@ -1,7 +1,7 @@
 package mmpaymkttransfers
 
 import (
-	"github.com/chanxuehong/wechat/mch/core"
+	"github.com/samhuangszu/wechat/mch/core"
 )
 
 // 红包查询接口.

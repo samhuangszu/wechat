@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"github.com/samhuangszu/wechat/mp/core"
 )
 
 type BeaconInfo struct {

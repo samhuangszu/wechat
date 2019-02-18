@@ -3,7 +3,7 @@ package datacube
 import (
 	"errors"
 
-	"github.com/chanxuehong/wechat/mp/core"
+	"github.com/samhuangszu/wechat/mp/core"
 )
 
 // 接口分析数据

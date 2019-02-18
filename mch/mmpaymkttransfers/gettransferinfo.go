@@ -1,7 +1,7 @@
 package mmpaymkttransfers
 
 import (
-	"github.com/chanxuehong/wechat/mch/core"
+	"github.com/samhuangszu/wechat/mch/core"
 )
 
 // 查询企业付款.

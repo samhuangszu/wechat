@@ -11,10 +11,10 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/chanxuehong/util"
-	"github.com/chanxuehong/util/security"
+	"github.com/samhuangszu/util"
+	"github.com/samhuangszu/util/security"
 
-	"github.com/chanxuehong/wechat/internal/debug/mch/callback"
+	"github.com/samhuangszu/wechat/internal/debug/mch/callback"
 )
 
 type Server struct {

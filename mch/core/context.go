@@ -3,7 +3,7 @@ package core
 import (
 	"net/http"
 
-	"github.com/chanxuehong/util"
+	"github.com/samhuangszu/util"
 )
 
 const (

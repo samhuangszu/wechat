@@ -1,4 +1,4 @@
-module github.com/chanxuehong/wechat
+module github.com/samhuangszu/wechat
 
 replace (
 	golang.org/x/blog => github.com/golang/blog v0.0.0-20181222191332-a61fd227c596
@@ -22,6 +22,6 @@ replace (
 )
 
 require (
-	github.com/chanxuehong/rand v0.0.0-20180830053958-4b3aff17f488
-	github.com/chanxuehong/util v0.0.0-20181116100727-caf892acd09c
+	github.com/samhuangszu/rand v0.0.0-20180830053958-4b3aff17f488
+	github.com/samhuangszu/util v0.0.0-20181116100727-caf892acd09c
 )

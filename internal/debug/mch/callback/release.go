@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/chanxuehong/util"
+	"github.com/samhuangszu/util"
 )
 
 func DebugPrintRequest(r *http.Request) {}

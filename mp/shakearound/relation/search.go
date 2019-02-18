@@ -3,9 +3,9 @@ package relation
 import (
 	"errors"
 
-	"github.com/chanxuehong/wechat/internal/util"
-	"github.com/chanxuehong/wechat/mp/core"
-	"github.com/chanxuehong/wechat/mp/shakearound/device"
+	"github.com/samhuangszu/wechat/internal/util"
+	"github.com/samhuangszu/wechat/mp/core"
+	"github.com/samhuangszu/wechat/mp/shakearound/device"
 )
 
 type SearchQuery struct {

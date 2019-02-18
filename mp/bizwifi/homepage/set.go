@@ -1,7 +1,7 @@
 package homepage
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"github.com/samhuangszu/wechat/mp/core"
 )
 
 // 默认模板

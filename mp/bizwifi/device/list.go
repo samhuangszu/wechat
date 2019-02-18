@@ -1,8 +1,8 @@
 package device
 
 import (
-	"github.com/chanxuehong/wechat/internal/util"
-	"github.com/chanxuehong/wechat/mp/core"
+	"github.com/samhuangszu/wechat/internal/util"
+	"github.com/samhuangszu/wechat/mp/core"
 )
 
 type SearchQuery struct {
