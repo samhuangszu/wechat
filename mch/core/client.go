@@ -179,8 +179,6 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 	if err != nil {
 		return nil, false, err
 	}
-	fmt.Printf("resp:%#v", resp)
-
 	// 判断协议状态
 	returnCode := resp["return_code"]
 	if returnCode == "" {
@@ -221,50 +219,52 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 	}
 
 	// 验证签名
-	signatureHave := resp["sign"]
-	if signatureHave == "" {
-		// TODO(samhuangszu): 在适当的时候更新下面的 case
-		switch url {
-		default:
-			return nil, false, ErrNotFoundSign
-		case "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers":
+	signatureHave, has := resp["sign"]
+	if has {
+		if signatureHave == "" {
+			// TODO(samhuangszu): 在适当的时候更新下面的 case
+			switch url {
+			default:
+				return nil, false, ErrNotFoundSign
+			case "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers":
+				// do nothing
+			case "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo":
 			// do nothing
-		case "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo":
-		// do nothing
-		case "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendredpack":
-			// do nothing
-		case "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack":
-			// do nothing
-		case "https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo":
-			// do nothing
-		case "https://fraud.mch.weixin.qq.com/risk/getpublickey":
-			// do nothing
-		}
-	} else {
-		// 获取返回参数的 sign_type 并检查其有效性
-		var respSignType string
-		switch signType := resp["sign_type"]; signType {
-		case "":
-			respSignType = reqSignType // 默认使用请求参数里的算法, 至少目前是这样
-		case SignType_MD5:
-			respSignType = SignType_MD5
-		case SignType_HMAC_SHA256:
-			respSignType = SignType_HMAC_SHA256
-		default:
-			err = fmt.Errorf("unsupported response sign_type: %s", signType)
-			return nil, false, err
-		}
+			case "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendredpack":
+				// do nothing
+			case "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack":
+				// do nothing
+			case "https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo":
+				// do nothing
+			case "https://fraud.mch.weixin.qq.com/risk/getpublickey":
+				// do nothing
+			}
+		} else {
+			// 获取返回参数的 sign_type 并检查其有效性
+			var respSignType string
+			switch signType := resp["sign_type"]; signType {
+			case "":
+				respSignType = reqSignType // 默认使用请求参数里的算法, 至少目前是这样
+			case SignType_MD5:
+				respSignType = SignType_MD5
+			case SignType_HMAC_SHA256:
+				respSignType = SignType_HMAC_SHA256
+			default:
+				err = fmt.Errorf("unsupported response sign_type: %s", signType)
+				return nil, false, err
+			}
 
-		// 校验签名
-		var signatureWant string
-		switch respSignType {
-		case SignType_MD5:
-			signatureWant = Sign2(resp, clt.apiKey, md5.New())
-		case SignType_HMAC_SHA256:
-			signatureWant = Sign2(resp, clt.apiKey, hmac.New(sha256.New, []byte(clt.apiKey)))
-		}
-		if signatureHave != signatureWant {
-			return nil, false, fmt.Errorf("sign mismatch,\nhave: %s,\nwant: %s", signatureHave, signatureWant)
+			// 校验签名
+			var signatureWant string
+			switch respSignType {
+			case SignType_MD5:
+				signatureWant = Sign2(resp, clt.apiKey, md5.New())
+			case SignType_HMAC_SHA256:
+				signatureWant = Sign2(resp, clt.apiKey, hmac.New(sha256.New, []byte(clt.apiKey)))
+			}
+			if signatureHave != signatureWant {
+				return nil, false, fmt.Errorf("sign mismatch,\nhave: %s,\nwant: %s", signatureHave, signatureWant)
+			}
 		}
 	}
 
