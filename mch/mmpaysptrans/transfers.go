@@ -45,6 +45,6 @@ type PaybankReq struct {
 	EncBankNo      string   `xml:"enc_bank_no" json:"enc_bank_no"`
 	EncTrueName    string   `xml:"enc_true_name" json:"enc_true_name"`
 	BankCode       string   `xml:"bank_code" json:"bank_code"`
-	Amount         int      `xml:"amount" json:"amount"`
+	Amount         int      `xml:"amount" json:"amount,string"`
 	Desc           string   `xml:"desc" json:"desc"`
 }
