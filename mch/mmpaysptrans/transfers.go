@@ -18,7 +18,7 @@ type QueryBankRequest struct {
 
 // GetPublicKey 获取Rsa公钥
 func GetPublicKey(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/risk/getpublickey", req)
+	return clt.PostXML(core.APIRiskURL()+"/risk/getpublickey", req)
 }
 
 // PublicKeyReq 查询付款到银行卡
