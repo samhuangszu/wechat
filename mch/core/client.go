@@ -179,6 +179,7 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 	if err != nil {
 		return nil, false, err
 	}
+	fmt.Printf("resp:%#v", resp)
 
 	// 判断协议状态
 	returnCode := resp["return_code"]
