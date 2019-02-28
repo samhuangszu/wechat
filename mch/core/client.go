@@ -193,9 +193,12 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 	}
 
 	// 验证 appid 和 mch_id
-	appId := resp["appid"]
-	if appId != "" && appId != clt.appId {
-		return nil, false, fmt.Errorf("appid mismatch, have: %s, want: %s", appId, clt.appId)
+	// risk pay_bank 不需要验证appId
+	if !(strings.Index(url, "risk/getpublickey") > -1 || strings.Index(url, "mmpaysptrans/pay_bank") > -1) {
+		appId := resp["appid"]
+		if appId != "" && appId != clt.appId {
+			return nil, false, fmt.Errorf("appid mismatch, have: %s, want: %s", appId, clt.appId)
+		}
 	}
 	mchId := resp["mch_id"]
 	if mchId != "" && mchId != clt.mchId {
@@ -232,6 +235,8 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 		case "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack":
 			// do nothing
 		case "https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo":
+			// do nothing
+		case "https://fraud.mch.weixin.qq.com/risk/getpublickey":
 			// do nothing
 		}
 	} else {
