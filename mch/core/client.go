@@ -89,7 +89,7 @@ func (clt *Client) PostXML(url string, req map[string]string) (resp map[string]s
 	switch url {
 	case "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers", // 企业付款
 		"https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendredpack", // 发放普通红包
-		"https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack": // 发放裂变红包
+		"https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank", "https://api2.mch.weixin.qq.com/mmpaysptrans/pay_bank": // 发放裂变红包
 		// TODO(samhuangszu): 这几个接口没有标准的 appid 和 mch_id 字段，需要用户在 req 里填写全部参数
 		// TODO(samhuangszu): 通读整个支付文档, 可以的话重新考虑逻辑
 	default:
