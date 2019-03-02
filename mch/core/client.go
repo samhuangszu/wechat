@@ -89,7 +89,9 @@ func (clt *Client) PostXML(url string, req map[string]string) (resp map[string]s
 	switch url {
 	case "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers", // 企业付款
 		"https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendredpack", // 发放普通红包
-		"https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank", "https://api2.mch.weixin.qq.com/mmpaysptrans/pay_bank": // 发放裂变红包
+		"https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack", // 发放裂变红包
+		"https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank", "https://api2.mch.weixin.qq.com/mmpaysptrans/pay_bank", //付款到银行卡
+		"https://api.mch.weixin.qq.com/mmpaysptrans/query_bank", "https://api2.mch.weixin.qq.com/mmpaysptrans/query_bank": //查询代付订单
 		// TODO(samhuangszu): 这几个接口没有标准的 appid 和 mch_id 字段，需要用户在 req 里填写全部参数
 		// TODO(samhuangszu): 通读整个支付文档, 可以的话重新考虑逻辑
 	default:
@@ -193,7 +195,7 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 
 	// 验证 appid 和 mch_id
 	// risk pay_bank 不需要验证appId
-	if !(strings.Index(url, "risk/getpublickey") > -1 || strings.Index(url, "mmpaysptrans/pay_bank") > -1) {
+	if !(strings.Index(url, "risk/getpublickey") > -1 || strings.Index(url, "mmpaysptrans/pay_bank") > -1 || strings.Index(url, "mmpaysptrans/query_bank") > -1) {
 		appId := resp["appid"]
 		if appId != "" && appId != clt.appId {
 			return nil, false, fmt.Errorf("appid mismatch, have: %s, want: %s", appId, clt.appId)
@@ -237,6 +239,8 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 			case "https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo", "https://api2.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo":
 				// do nothing
 			case "https://fraud.mch.weixin.qq.com/risk/getpublickey":
+				// do nothing
+			case "https://api.mch.weixin.qq.com/mmpaysptrans/query_bank", "https://api2.mch.weixin.qq.com/mmpaysptrans/query_bank":
 				// do nothing
 			}
 		} else {
