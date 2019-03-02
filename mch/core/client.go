@@ -138,7 +138,6 @@ func (clt *Client) PostXML(url string, req map[string]string) (resp map[string]s
 		return nil, err
 	}
 	body := buffer.Bytes()
-	fmt.Printf("post body xml:%s", body)
 	hasRetried := false
 RETRY:
 	resp, needRetry, err := clt.postXML(url, body, reqSignType)
