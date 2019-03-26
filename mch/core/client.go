@@ -22,9 +22,9 @@ type Client struct {
 	mchId  string
 	apiKey string
 
-	subAppId string
-	subMchId string
-
+	subAppId   string
+	subMchId   string
+	sandBox    bool
 	httpClient *http.Client
 }
 
@@ -45,19 +45,28 @@ func (clt *Client) SubMchId() string {
 	return clt.subMchId
 }
 
+func (clt *Client) SandBox() bool {
+	return clt.sandBox
+}
+
 // NewClient 创建一个新的 Client.
 //  appId:      必选; 公众号的 appid
 //  mchId:      必选; 商户号 mch_id
 //  apiKey:     必选; 商户的签名 key
 //  httpClient: 可选; 默认使用 util.DefaultHttpClient
-func NewClient(appId, mchId, apiKey string, httpClient *http.Client) *Client {
+func NewClient(appId, mchId, apiKey string, httpClient *http.Client, sandBox ...bool) *Client {
 	if httpClient == nil {
 		httpClient = wechatutil.DefaultHttpClient
+	}
+	isSandBox := false
+	if len(sandBox) > 0 {
+		isSandBox = sandBox[0]
 	}
 	return &Client{
 		appId:      appId,
 		mchId:      mchId,
 		apiKey:     apiKey,
+		sandBox:    isSandBox,
 		httpClient: httpClient,
 	}
 }
@@ -69,9 +78,13 @@ func NewClient(appId, mchId, apiKey string, httpClient *http.Client) *Client {
 //  subAppId:   可选; 公众号的 sub_appid
 //  subMchId:   必选; 商户号 sub_mch_id
 //  httpClient: 可选; 默认使用 util.DefaultHttpClient
-func NewSubMchClient(appId, mchId, apiKey string, subAppId, subMchId string, httpClient *http.Client) *Client {
+func NewSubMchClient(appId, mchId, apiKey string, subAppId, subMchId string, httpClient *http.Client, sandBox ...bool) *Client {
 	if httpClient == nil {
 		httpClient = wechatutil.DefaultHttpClient
+	}
+	isSandBox := false
+	if len(sandBox) > 0 {
+		isSandBox = sandBox[0]
 	}
 	return &Client{
 		appId:      appId,
@@ -79,6 +92,7 @@ func NewSubMchClient(appId, mchId, apiKey string, subAppId, subMchId string, htt
 		apiKey:     apiKey,
 		subAppId:   subAppId,
 		subMchId:   subMchId,
+		sandBox:    isSandBox,
 		httpClient: httpClient,
 	}
 }
