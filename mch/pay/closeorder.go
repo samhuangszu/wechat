@@ -7,7 +7,7 @@ import (
 
 // CloseOrder 关闭订单.
 func CloseOrder(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/pay/closeorder", req)
+	return clt.PostXML(core.APIBaseURL()+core.GetPath(clt, "/pay/closeorder"), req)
 }
 
 type CloseOrderRequest struct {

@@ -8,7 +8,7 @@ import (
 // Reverse 撤销订单.
 //  NOTE: 请求需要双向证书.
 func Reverse(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/secapi/pay/reverse", req)
+	return clt.PostXML(core.APIBaseURL()+core.GetPath(clt, "/secapi/pay/reverse"), req)
 }
 
 type ReverseRequest struct {

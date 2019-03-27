@@ -11,7 +11,7 @@ import (
 
 // MicroPay 提交刷卡支付.
 func MicroPay(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/pay/micropay", req)
+	return clt.PostXML(core.APIBaseURL()+core.GetPath(clt, "/pay/micropay"), req)
 }
 
 type MicroPayRequest struct {

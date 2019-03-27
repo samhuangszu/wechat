@@ -11,7 +11,7 @@ import (
 
 // OrderQuery 查询订单.
 func OrderQuery(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/pay/orderquery", req)
+	return clt.PostXML(core.APIBaseURL()+core.GetPath(clt, "/pay/orderquery"), req)
 }
 
 type OrderQueryRequest struct {

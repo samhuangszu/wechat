@@ -32,7 +32,7 @@ type PublicKeyReq struct {
 
 // Paybank 付款到银行卡
 func Paybank(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/mmpaysptrans/pay_bank", req)
+	return clt.PostXML(core.APIBaseURL()+core.GetPath(clt, "/mmpaysptrans/pay_bank"), req)
 }
 
 // PaybankReq 查询付款到银行卡

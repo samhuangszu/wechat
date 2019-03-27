@@ -11,7 +11,7 @@ import (
 
 // RefundQuery 查询退款.
 func RefundQuery(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/pay/refundquery", req)
+	return clt.PostXML(core.APIBaseURL()+core.GetPath(clt, "/pay/refundquery"), req)
 }
 
 type RefundQueryRequest struct {

@@ -125,7 +125,7 @@ func downloadBillToWriter(clt *core.Client, writer io.Writer, req *DownloadBillR
 		return 0, err
 	}
 
-	httpResp, err := httpClient.Post(core.APIBaseURL()+"/pay/downloadbill", "text/xml; charset=utf-8", requestBuffer)
+	httpResp, err := httpClient.Post(core.APIBaseURL()+core.GetPath(clt, "/pay/downloadbill"), "text/xml; charset=utf-8", requestBuffer)
 	if err != nil {
 		return 0, err
 	}
